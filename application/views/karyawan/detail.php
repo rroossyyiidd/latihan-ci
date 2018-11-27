@@ -4,6 +4,9 @@
 
 <table>
     <tr>
+        <td><img width="100" height="100" src="<?= BASE_ASSETS . '/uploads/' . $karyawan['foto'] ?>"></td>
+    </tr>
+    <tr>
         <th>Nama</th>
         <td><?= $karyawan['nama'] ?></td>
     </tr>

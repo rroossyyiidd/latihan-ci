@@ -12,8 +12,10 @@
     <h3>Edit Karyawan</h3>
     <!--ini untuk validasi error-->
 <?php echo validation_errors(); ?>
-    <form action="<?= base_url('karyawan/edit_save') ?>" method="post">
+    <form enctype="multipart/form-data" action="<?= base_url('karyawan/edit_save') ?>" method="post">
         <input type="hidden" name="id" value="<?= $karyawan['id'] ?>"/>
+        <!--        cara yg paling simple, bila tidak ada file baru yang diupload-->
+        <input type="hidden" name="foto_lama" value="<?= $karyawan['foto'] ?>"/>
         <div>
             <label>Nama:</label>
             <input type="text" name="nama" value="<?= $karyawan['nama'] ?>" required/>
@@ -86,6 +88,11 @@
                     required
                     class="form-control datepicker col-sm-4"
             />
+        </div>
+        <div>
+            <label>Foto: </label>
+            <input type="file" name="foto"/>
+            <img width="100" height="100" src="<?= BASE_ASSETS . '/uploads/' . $karyawan['foto'] ?>">
         </div>
 
         <div>

@@ -84,17 +84,20 @@ class Karyawan extends CI_Controller
             $config['max_size'] = '2048000';
 
             $file_name = "";
-            $this->load->library('upload', $config); //load library
 
-            if ($this->upload->do_upload('foto')) {
-                $upload_data = $this->upload->data();
-                $file_name = $upload_data['file_name'];
-                //selain bisa dpt nama file jg bisa dpt informasi lain spt file_size dll
-                //referensi: http://localhost/appkaryawan/user_guide/libraries/file_uploading.html
-            } else {
-                $error = array('error' => $this->upload->display_errors());
-                print_r($error);
-                exit;
+            //cek apakah ada file yang diupload
+            if ($_FILES['foto']['name'] != "") {
+                $this->load->library('upload', $config); //load library
+                if ($this->upload->do_upload('foto')) {
+                    $upload_data = $this->upload->data();
+                    $file_name = $upload_data['file_name'];
+                    //selain bisa dpt nama file jg bisa dpt informasi lain spt file_size dll
+                    //referensi: http://localhost/appkaryawan/user_guide/libraries/file_uploading.html
+                } else {
+                    $error = array('error' => $this->upload->display_errors());
+                    print_r($error);
+                    exit;
+                }
             }
 
             $data = [
@@ -165,6 +168,32 @@ class Karyawan extends CI_Controller
             $this->load->view('karyawan/edit', $data);
             //disini nanti dikeluarkan untuk REST API
         } else {
+            //upload file
+            //http://localhost/appkaryawan/user_guide/libraries/file_uploading.html
+            $config['upload_path'] = './assets/uploads/';
+            $config['allowed_types'] = '*';
+            $config['overwrite'] = TRUE;
+            $config['max_size'] = '2048000';
+
+            $file_name = "";
+
+            //cek apakah ada file yang diupload
+            if ($_FILES['foto']['name'] != "") {
+                $this->load->library('upload', $config); //load library
+                if ($this->upload->do_upload('foto')) {
+                    $upload_data = $this->upload->data();
+                    $file_name = $upload_data['file_name'];
+                    //selain bisa dpt nama file jg bisa dpt informasi lain spt file_size dll
+                    //referensi: http://localhost/appkaryawan/user_guide/libraries/file_uploading.html
+                } else {
+                    $error = array('error' => $this->upload->display_errors());
+                    print_r($error);
+                    exit;
+                }
+            } else {
+                $file_name = $this->input->post('foto_lama');
+            }
+
             $data = [
                 'nama' => $this->input->post('nama'),
                 'email' => $this->input->post('email'),
@@ -173,6 +202,7 @@ class Karyawan extends CI_Controller
                 'jeniskelamin' => $this->input->post('jeniskelamin'),
                 'iddivisi' => $this->input->post('iddivisi'),
                 'tgllahir' => $this->input->post('tgllahir'),
+                'foto' => $file_name
             ];
 
             //data = menampung value dari form ke data untuk input di tabel mysql
