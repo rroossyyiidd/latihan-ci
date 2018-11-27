@@ -20,13 +20,15 @@ class Karyawan_model extends CI_Model
 
     //fungsi fungsi yg mengakses DB
 
-    //get all
+    //get all data
     public function find_all()
     {
         //menggunakan result array agar hasilnya array
-        return $this->db->get($this->table)->result_array();
+        //querynya diubah sesuai dengan kebutuhan
+//        return $this->db->get($this->table)->result_array();
         //menggunakan query native di codeigniter
-//        return $this->db->query("SELECT nama FROM ". $this->table)->result_array();
+        return $this->db->query("SELECT karyawan.*, divisi.nama as namadivisi FROM `karyawan`
+INNER JOIN divisi on divisi.id = karyawan.iddivisi")->result_array();
     }
 
     public function insert($data)
@@ -40,9 +42,12 @@ class Karyawan_model extends CI_Model
         return $this->db->update($this->table, $data);
     }
 
+    //detail dari satu baris tabel berdasarkan id
     public function find_by_id($id)
     {
-        $result = $this->db->get_where($this->table, ['id' => $id])->result_array();
+//        $result = $this->db->get_where($this->table, ['id' => $id])->result_array();
+        $result = $this->db->query("SELECT karyawan.*, divisi.nama as namadivisi FROM `karyawan`
+INNER JOIN divisi on divisi.id = karyawan.iddivisi where karyawan.id=$id")->result_array();
         if ($result) {
             return $result[0];
         } else {
