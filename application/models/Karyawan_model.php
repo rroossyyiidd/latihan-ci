@@ -55,6 +55,18 @@ INNER JOIN divisi on divisi.id = karyawan.iddivisi where karyawan.id=$id")->resu
         }
     }
 
+    public function find_by_name($name)
+    {
+//        $result = $this->db->get_where($this->table, ['id' => $id])->result_array();
+        $result = $this->db->query("SELECT karyawan.*, divisi.nama as namadivisi FROM `karyawan`
+INNER JOIN divisi on divisi.id = karyawan.iddivisi where karyawan.nama LIKE '%$name%'")->result_array();
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
     public function delete($id)
     {
         $this->db->where('id', $id);
