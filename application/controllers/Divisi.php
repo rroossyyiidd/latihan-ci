@@ -16,6 +16,16 @@ class Divisi extends CI_Controller
         parent:: __construct();
         //membuat object divisi dari class divisi model, ini di letak di construk biar nggak dipanggil berulangkali
         $this->load->model('divisi_model', 'divisi'); //params ke 2 itu nama objek
+
+        //untuk mengecek apakah user sudah login apa belum
+        if (!$this->ion_auth->logged_in()) {
+            redirect(base_url('login'));
+        }
+
+        //untuk mengecek apakah yg login admin?
+        if (!$this->ion_auth->is_admin()) {
+            redirect(base_url('login'));
+        }
     }
 
     //segment 2

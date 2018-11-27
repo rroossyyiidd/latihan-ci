@@ -58,7 +58,8 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database', 'form_validation', 'pagination'); //"database" digunakan untuk fungsi database di CI (active record), form validation dan pagination
+//"database" digunakan untuk fungsi database di CI (active record), form validation dan pagination
+$autoload['libraries'] = array('database', 'form_validation', 'pagination', 'ion_auth', 'session');
 
 /*
 | -------------------------------------------------------------------

@@ -14,10 +14,24 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="<?= base_url('welcome/cari') ?>">Pencarian</a></li>
-                <li><a href="<?= base_url('welcome') ?>">Login</a></li>
-                <li><a href="<?= base_url('divisi') ?>">Divisi</a></li>
-                <li><a href="<?= base_url('karyawan') ?>">Karyawan</a></li>
+                <?php
+                if ($this->ion_auth->is_admin()) {
+                    $user = $this->ion_auth->user()->row();
+                    ?>
+                    <li><a href="<?= base_url('welcome/cari') ?>">Pencarian</a></li>
+                    <li><a href="<?= base_url('login') ?>">Login</a></li>
+                    <li><a href="<?= base_url('divisi') ?>">Divisi</a></li>
+                    <li><a href="<?= base_url('karyawan') ?>">Karyawan</a></li>
+                    <li><a href="<?= base_url('karyawan/surat') ?>">Surat Keluar</a></li>
+                    <li><a href="<?= base_url('login/logout') ?>">Logout (<?= $user->email ?>)</a></li>
+                    <?php
+                } else {
+                    ?>
+                    <li><a href="<?= base_url('welcome/cari') ?>">Pencarian</a></li>
+                    <li><a href="<?= base_url('login') ?>">Login</a></li>
+                    <?php
+                }
+                ?>
             </ul>
         </div>
     </div>

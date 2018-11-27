@@ -17,6 +17,8 @@ class Karyawan extends CI_Controller
         $this->load->model('karyawan_model', 'karyawan');
         //juga perlu load divisi, karena ada relasi
         $this->load->model('divisi_model', 'divisi'); //dibutuhkan ketika add karyawan memilih divisi (dropdown divisi)
+        $this->load->model('nota_model', 'nota');
+        $this->load->model('notadetail_model', 'detail');
     }
 
     public function index()
@@ -218,6 +220,48 @@ class Karyawan extends CI_Controller
             $this->karyawan->delete($id);
         }
         redirect(base_url('karyawan'));
+    }
+
+    public function surat()
+    {
+        $data['records'] = $this->karyawan->find_all();
+        $this->load->view('karyawan/surat', $data);
+    }
+
+    public function surat_save()
+    {
+        $nota = array(
+            'nomor' => $this->input->post('nomor'),
+            'tanggal' => date('Y-m-d')
+        );
+        $this->db->trans_begin();
+        $notaid = $this->nota->insert($nota);
+        $total = 0;
+        for ($i = 0; $i < count($_POST['karyawan']); $i++) {
+            $karyawanid = $_POST['karyawan'][$i];
+            $biaya = $_POST['biaya'][$i];
+            $qty = $_POST['qty'][$i];
+            $subtotal = $_POST['subtotal'][$i];
+            $detail = array(
+                'idnota' => $notaid,
+                'karyawanid' => $karyawanid,
+                'biaya' => $biaya,
+                'qty' => $qty,
+                'subtotal' => $subtotal
+            );
+            $total += $subtotal;
+            $this->detail->insert($detail);
+        }
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
+        $data['nomor'] = $this->input->post('nomor');
+        $data['tanggal'] = date('Y-m-d');
+        $data['post'] = $_POST;
+        $data['total'] = $total;
+        $this->load->view("karyawan/nota", $data);
     }
 
 }
