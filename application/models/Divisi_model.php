@@ -56,4 +56,20 @@ class Divisi_model extends CI_Model
         return $this->db->delete($this->table);
     }
 
+    //untuk pagination
+    public function pagination($limit, $start)
+    {
+        $this->db->limit($limit, $start);
+        $result = $this->db->get($this->table)->result_array();
+//        $result = $this->db->query("SELECT nama FROM ". $this->table)->result_array();
+        if (count($result)) {
+            return $result;
+        }
+        return false;
+    }
+
+    //menghitung seluruh data
+    function get_total(){
+        return $this->db->count_all($this->table);
+    }
 }

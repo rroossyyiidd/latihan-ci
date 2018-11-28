@@ -47,6 +47,4 @@ class Welcome extends CI_Controller {
         $data['records'] = $this->karyawan->find_by_name($nama);
         $this->load->view('karyawan/cari', $data);
     }
-
-
 }
