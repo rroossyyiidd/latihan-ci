@@ -1,0 +1,25 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #f9f9f9 !important;
+}
+
+/*jarak dari atas*/
+.break {
+    margin-top: 6%;
+}
+
+.bg-login {
+    /*background: url("");*/
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto;
+    /*atas kanan kiri bawah*/
+    padding: 10px 30px 170px 30px;
+    -webkit-box-shadow: 9px 9px 22px 1px rgba(5, 5, 5, 0.41);
+    -moz-box-shadow: 9px 9px 22px 1px rgba(5, 5, 5, 0.41);
+    box-shadow: 9px 9px 22px 1px rgba(5, 5, 5, 0.41);
+    max-width: 350px;
+}

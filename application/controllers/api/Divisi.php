@@ -17,6 +17,8 @@ class Divisi extends REST_Controller
 {
     function __construct($config = 'rest')
     {
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
         parent::__construct($config);
 
         //$this->input->post() kalau extends REST_Controller $this->post
@@ -53,10 +55,12 @@ class Divisi extends REST_Controller
         }
     }
 
-    // http://localhost/appkaryawan/api/divisi/pagination
+    //secara default start index itu nol (0)
+    // http://localhost/appkaryawan/api/divisi/pagination/0
     function pagination_get()
     {
         //DATA PAGINATION
+        //kalau limit 10 maka hal 0 x 10, 1 x 10, 2 x 10 untuk penentuan start index
         $data = [];
         //jumlah data per halaman
         $limit_per_page = 10;
@@ -79,7 +83,8 @@ class Divisi extends REST_Controller
     // http://localhost/appkaryawan/api/divisi/insert
     function insert_post()
     {
-        $this->form_validation->set_rules('kode', 'Kode divisi', 'required');
+        //mengcustom respon validation
+        $this->form_validation->set_rules('kode', 'Kode divisi', 'required', ['required' => 'kode bro']);
         $this->form_validation->set_rules('nama', 'Nama divisi', 'required');
 
         //cek validasi
@@ -90,8 +95,14 @@ class Divisi extends REST_Controller
                 'kode' => $this->input->post('kode'),
                 'nama' => $this->input->post('nama')
             ];
-            $this->divisi->insert($data);
-            $this->response($data);
+            $result = $this->divisi->insert($data);
+            if ($result) {
+                //mendapatkan id yang barusan diinputkan
+                $data['id'] = $this->db->insert_id();
+                $this->response($data);
+            } else {
+                $this->response($result);
+            }
         }
     }
 
@@ -103,7 +114,7 @@ class Divisi extends REST_Controller
         if ($data) {
             $this->response($data);
         };
-        $this->response(null, REST_Controller::HTTP_NO_CONTENT);
+        $this->response(null, REST_Controller::HTTP_NOT_FOUND);
     }
 
     // http://localhost/appkaryawan/api/divisi/update
@@ -116,7 +127,7 @@ class Divisi extends REST_Controller
         $this->form_validation->set_rules('nama', 'Nama divisi', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            $this->response($this->validation_errors(), REST_Controller::HTTP_BAD_REQUEST);
+            $this->response(validation_errors(), REST_Controller::HTTP_BAD_REQUEST);
         } else {
             $data = [
                 'kode' => $this->input->post('kode'),
@@ -130,14 +141,19 @@ class Divisi extends REST_Controller
         }
     }
 
-    // http://localhost/appkaryawan/api/divisi/delete
+    // http://localhost/appkaryawan/api/divisi/delete/1
     function delete_post()
     {
         //dari url
         $id = $this->uri->segment(4);
         if ($id) {
             $result = $this->divisi->delete($id);
+            if (!$result) {
+                log_message('DEBUG', implode("-", $this->db->error()));
+                $this->response('tidak dapat menghapus data', 500);
+            }
+            $this->response("Berhasil menghapus data");
         }
-        $this->response($result);
+        $this->response('tidak dapat menghapus data', 500);
     }
 }

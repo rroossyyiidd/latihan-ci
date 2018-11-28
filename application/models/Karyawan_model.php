@@ -76,6 +76,8 @@ INNER JOIN divisi on divisi.id = karyawan.iddivisi where karyawan.nama LIKE '%$n
     //untuk pagination
     public function pagination($limit, $start)
     {
+        //limit: jumlah data yg sekali ambil
+        //start: start index data
         $this->db->limit($limit, $start);
         $result = $this->db->get($this->table)->result_array();
 //        $result = $this->db->query("SELECT nama FROM ". $this->table)->result_array();
@@ -86,7 +88,8 @@ INNER JOIN divisi on divisi.id = karyawan.iddivisi where karyawan.nama LIKE '%$n
     }
 
     //menghitung seluruh data
-    function get_total(){
+    function get_total()
+    {
         return $this->db->count_all($this->table);
     }
 }
