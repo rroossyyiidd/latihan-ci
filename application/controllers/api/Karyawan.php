@@ -17,11 +17,16 @@ class Karyawan extends REST_Controller
 {
     function __construct($config = 'rest')
     {
-        //CORS
-        header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-
         parent::__construct($config);
+
+//        header('Access-Control-Allow-Origin: *');
+//        header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+//        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+//        $method = $_SERVER['REQUEST_METHOD'];
+//        if ($method == "OPTIONS") {
+//            die();
+//        }
+
         //cek di kedua jenis method get dan post
         $token = $this->post('token');
         if (!$token) {
