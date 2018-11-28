@@ -22,13 +22,14 @@ include APPPATH . '/views/fragment/menu.php';
     }
 
     function add_content(val) {
+        //split = merubah string jadi array
         var explode = val.split('|');
         var value = explode[0];
         //konten kolom tabel
         var content = '<tr id="tr_' + idx + '">';
         content += '<td>';
         content += '<input value="' + value + '" type="hidden" name="karyawan[]"">';
-        content += '<input value="' + val + ' "type="text" readonly name="nama[]"">';
+        content += '<input value="' + val + ' " type="text" readonly name="nama[]"">';
         content += '</td>';
         content += '<td>';
         content += '<input type="text" name="biaya[]">';
@@ -47,7 +48,7 @@ include APPPATH . '/views/fragment/menu.php';
         $("#tabel").append(content);
     }
 
-    //ini onchange
+    //ini onchange, gk ada "on" nya
     $(function () {
         $("#karyawan").change(function () {
             //mengambil value dari drop down
@@ -90,7 +91,8 @@ include APPPATH . '/views/fragment/menu.php';
             </div>
         </div>
         <div class="form-group">
-            <!--            punya id tabel-->
+            <!--            punya id tabel untuk di javascript-->
+            <!--            name untuk server, id untuk js, kalau name boleh dobel, id harus unik tidak boleh dobel-->
             <table id="tabel" class="table table-hover">
                 <tr>
                     <th>Karyawan</th>

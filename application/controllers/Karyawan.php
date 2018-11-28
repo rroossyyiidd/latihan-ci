@@ -240,16 +240,25 @@ class Karyawan extends CI_Controller
         $this->load->view('karyawan/surat', $data);
     }
 
-    //
+    //menyimpan surat
     public function surat_save()
     {
+        //mengambil data nota dari form
         $nota = array(
             'nomor' => $this->input->post('nomor'),
             'tanggal' => date('Y-m-d')
         );
+
+        //transaction, konsep di db, karena ada 2 tabel yg terlibat (untuk menghindari tidak sinkron)
         $this->db->trans_begin();
-        $notaid = $this->nota->insert($nota);
+
+        //insert ke tabel nota
+        $this->nota->insert($nota);
+        //untuk mendapatkan id (autoincrement) dari tabel yang baru diinsert (tabel nota)
+        $notaid = $this->db->insert_id();
+
         $total = 0;
+        //count digunakan untuk menghitung jumlah data
         for ($i = 0; $i < count($_POST['karyawan']); $i++) {
             $karyawanid = $_POST['karyawan'][$i];
             $biaya = $_POST['biaya'][$i];
@@ -262,14 +271,22 @@ class Karyawan extends CI_Controller
                 'qty' => $qty,
                 'subtotal' => $subtotal
             );
+
             $total += $subtotal;
+            //insert ke tabel detail
             $this->detail->insert($detail);
         }
+
+        //pengecekan data
         if ($this->db->trans_status() === FALSE) {
+            //mengembalikan data
             $this->db->trans_rollback();
         } else {
+            //baru disimpan ketika kedua insert berhasil
             $this->db->trans_commit();
         }
+
+        //menampilkan data ke nota
         $data['nomor'] = $this->input->post('nomor');
         $data['tanggal'] = date('Y-m-d');
         $data['post'] = $_POST;
