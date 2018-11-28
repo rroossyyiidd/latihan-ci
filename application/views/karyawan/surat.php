@@ -24,6 +24,7 @@ include APPPATH . '/views/fragment/menu.php';
     function add_content(val) {
         var explode = val.split('|');
         var value = explode[0];
+        //konten kolom tabel
         var content = '<tr id="tr_' + idx + '">';
         content += '<td>';
         content += '<input value="' + value + '" type="hidden" name="karyawan[]"">';
@@ -42,6 +43,7 @@ include APPPATH . '/views/fragment/menu.php';
         content += '<a href="#" onclick=\'hapus(' + idx + ')\'">hapus</a>';
         content += '</td>';
         content += '</tr>';
+        //append (menambahkan data) kolom tabel ke data tabel
         $("#tabel").append(content);
     }
 
@@ -67,7 +69,7 @@ include APPPATH . '/views/fragment/menu.php';
         <div class="form-group">
             <label class="control-label col-sm-2" for="faktur">Karyawan</label>
             <div class="col-sm-10">
-                <!--                ini id karyawan-->
+                <!--                ini id karyawan untuk event click-->
                 <select title="Select your surfboard" class="selectpicker" id="karyawan">
                     <option>Pilih...</option>
                     <?php

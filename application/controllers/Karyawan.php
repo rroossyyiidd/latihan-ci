@@ -13,6 +13,17 @@ class Karyawan extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+
+        //untuk mengecek apakah user sudah login apa belum
+        if (!$this->ion_auth->logged_in()) {
+            redirect(base_url('login'));
+        }
+
+        //untuk mengecek apakah yg login admin?
+        if (!$this->ion_auth->is_admin()) {
+            redirect(base_url('login'));
+        }
+
         //me load model, nama model dan nama objek model
         $this->load->model('karyawan_model', 'karyawan');
         //juga perlu load divisi, karena ada relasi
@@ -222,12 +233,14 @@ class Karyawan extends CI_Controller
         redirect(base_url('karyawan'));
     }
 
+    //menampilkan view surat
     public function surat()
     {
         $data['records'] = $this->karyawan->find_all();
         $this->load->view('karyawan/surat', $data);
     }
 
+    //
     public function surat_save()
     {
         $nota = array(
