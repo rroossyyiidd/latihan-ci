@@ -19,7 +19,7 @@
                     $user = $this->ion_auth->user()->row();
                     ?>
                     <li><a href="<?= base_url('welcome/cari') ?>">Pencarian</a></li>
-                    <li><a href="<?= base_url('login') ?>">Login</a></li>
+<!--                    <li><a href="--><?//= base_url('login') ?><!--">Login</a></li>-->
                     <li><a href="<?= base_url('divisi') ?>">Divisi</a></li>
                     <li><a href="<?= base_url('karyawan') ?>">Karyawan</a></li>
                     <li><a href="<?= base_url('karyawan/surat') ?>">Surat Keluar</a></li>
