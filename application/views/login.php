@@ -1,6 +1,5 @@
 <?php include APPPATH . 'views/fragment/header.php'; ?>
 
-<!--    --><?php //include '../../assets/style/login.css'; ?>
 <style>
 
     .bg-login {
@@ -47,12 +46,12 @@
             }
             ?>
             <form method="post" action="<?= base_url('login/masuk') ?>">
-                <div class="input-group">
+                <div>
                     <input style="margin-top: 10px" name="username" type="email" class="form-control"
                            placeholder="email@mail.com"
                            aria-describedby="basic-addon1">
                 </div>
-                <div class="input-group">
+                <div>
                     <input style="margin-top: 10px" name="password" type="password" class="form-control"
                            placeholder="email@mail.com"
                            aria-describedby="basic-addon1">

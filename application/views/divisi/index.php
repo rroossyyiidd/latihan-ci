@@ -1,7 +1,8 @@
 <?php include APPPATH . 'views/fragment/header.php'; ?>
 <?php include APPPATH . 'views/fragment/menu.php'; ?>
-    <h3>Data Divisi</h3>
-    <a class="btn bg-success pull-right" href="<?= base_url('divisi/tambah') ?>">Tambah</a>
+    <h3 style="margin-bottom: 20px; font-family: 'Open Sans', sans-serif;">Data Divisi</h3>
+    <a class="btn bg-success pull-left" style="margin-bottom: 15px" href="<?= base_url('divisi/tambah') ?>">Tambah
+        Divisi</a>
     <table class="table table-striped">
         <tr>
             <!--        <th>No</th>-->
